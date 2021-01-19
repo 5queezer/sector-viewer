@@ -6,7 +6,7 @@ const Sectors = React.lazy(() => import('./views/sectors/Sectors'));
 const routes = [
     { path: '/', exact: true, name: 'Home' },
     { path: '/overview', name: 'Overview', component: Overview },
-    { path: '/sectors/:id', exact: true, name: 'User Details', component: Sectors }
+    { path: '/sectors/:id', exact: true, name: 'Sectors', component: Sectors }
 ]   
 
 export default routes;
