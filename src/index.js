@@ -6,6 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux'
 import store from './store'
 
+import { icons } from './assets/icons'
+
+React.icons = icons
+
 ReactDOM.render(
   <Provider store={store}>
     <App/>
