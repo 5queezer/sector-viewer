@@ -4,8 +4,8 @@ import CIcon from '@coreui/icons-react'
 const _nav =  [
     {
       _tag: 'CSidebarNavItem',
-      name: 'Dashboard',
-      to: '/dashboard',
+      name: 'Overview',
+      to: '/overview',
       icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon"/>
     },
     {
