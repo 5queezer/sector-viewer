@@ -17,19 +17,16 @@ const _nav =  [
           {
             _tag: 'CSidebarNavItem',
             name: 'Sector 1',
-            icon: 'cil-graph',
             to: '/sectors/subsector1',
           },
           {
             _tag: 'CSidebarNavItem',
             name: 'Sector 2',
-            icon: 'cil-graph',
             to: '/sectors/subsector2',
           },
           {
             _tag: 'CSidebarNavItem',
             name: 'Sector 3',
-            icon: 'cil-graph',
             to: '/sectors/subsector3',
           },
         ],
