@@ -17,9 +17,7 @@ async function getSectorInfo(args) {
             resolution: resolution,
             valueNames: valueNames
         },
-        headers: {
-            'Content-Type': 'application/json'
-        }    
+        responseType: 'json' 
     })
 
     return response;
