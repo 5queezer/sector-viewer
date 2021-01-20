@@ -1,6 +1,6 @@
 import getSectorInfo from './api';
 
-test('test example api call', () => {
+test('test example api call', async () => {
     const args = {
         sector: 'sector1',
         startDate: 1582904000000,
@@ -9,9 +9,8 @@ test('test example api call', () => {
         valueNames: ['value0', 'value1', 'value2']
     };
 
-    return getSectorInfo(args).then( res => {
-        expect(res.status).toBe(200);
-        expect(res.data.sectorName).toBe(args.sector);
-    });
+    const res = await getSectorInfo(args);
+    expect(res.status).toBe(200);
+    expect(res.data.sectorName).toBe(args.sector);
 
 });
