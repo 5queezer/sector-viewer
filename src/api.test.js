@@ -14,4 +14,4 @@ test('test example api call', () => {
         expect(res.data.sectorName).toBe(args.sector);
     });
 
-})
+});
