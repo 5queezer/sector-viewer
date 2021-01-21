@@ -1,11 +1,19 @@
 import axios from 'axios';
 
 async function getSectorInfo(args) {
-    const { sector, startDate, endDate, resolution } = args;
-    let { valueNames } = args;
+    const { sector, resolution } = args;
+    let { valueNames, startDate, endDate } = args;
 
     if (Array.isArray(valueNames)) {
         valueNames = valueNames.join(',');
+    }
+
+    if (startDate instanceof Date) {
+        startDate = startDate.getTime();
+    }
+
+    if (endDate instanceof Date) {
+        endDate = endDate.getTime();
     }
 
     const response = await axios({
