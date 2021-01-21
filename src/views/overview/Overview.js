@@ -125,12 +125,14 @@ class Overview extends React.Component {
               <CFormGroup row>
                 <CCol xs="12" md="6">
                   <DateTimePicker
+                    clearIcon={null}
                     onChange={date => this.setState({ startDate: date })}
                     value={this.state.startDate}
                   />
                 </CCol>
                 <CCol xs="12" md="6">
                   <DateTimePicker
+                    clearIcon={null}
                     onChange={date => this.setState({ endDate: date })}
                     value={this.state.endDate}
                   />
@@ -149,11 +151,13 @@ class Overview extends React.Component {
             const sector = this.state[`sector${key}`];
             return <CCol xs="12" md="6" key={index}>
               <CCard>
-                <CCardHeader>
-                  <CCardTitle>{sector.label}</CCardTitle>
-                </CCardHeader>
                 <CCardBody>
-                  <table className="table">
+                  <table className="table table-sm">
+                    <thead>
+                      <tr>
+                        <th colSpan="2">{sector.label}</th>
+                      </tr>
+                    </thead>
                     <tbody>
                         <tr>
                           <th>Mean</th>
