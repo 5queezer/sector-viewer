@@ -5,10 +5,17 @@ import DateTimeBar from '../../components/DateTimeBar';
 import {
   CCol,
   CRow,
-  CContainer,
+  CContainer
 } from '@coreui/react'
+import { CChartLine } from '@coreui/react-chartjs';
+import { getStyle, hexToRgba } from '@coreui/utils'
+
 import { mean, median, min, max } from 'mathjs';
 import { recursiveSearch, formatLabel } from '../../utils';
+
+const brandSuccess = getStyle('success') || '#4dbd74'
+const brandInfo = getStyle('info') || '#20a8d8'
+const brandDanger = getStyle('danger') || '#f86c6b'
 
 class Sector1 extends React.Component {
   constructor(props) {
@@ -91,33 +98,58 @@ class Sector1 extends React.Component {
   }
 
   render() {
+    const chart = {};
+    const colors = [brandInfo, brandSuccess, brandDanger];
+    let colorIndex = 0;
+
+    chart.datasets = this.state.valueNames.map((key, index) => {
+      // rotate colors
+      const color = colors[colorIndex++ % colors.length];
+
+      return {
+        label: formatLabel(key),
+        fill: false,
+        backgroundColor: hexToRgba(color, 10),
+        borderColor: color,
+        pointHoverBackgroundColor: color,
+        borderWidth: 2,
+        data: this.state[key]?.values
+      }
+    });
+    chart.options = {};
+
     return <CContainer>
-    <CRow>
-      <CCol col="12">
-        <DateTimeBar 
-        startDate={this.state.startDate} 
-        endDate={this.state.endDate}
-        resolution={this.state.resolution}
-        onChangeStartDate={date => this.handleChangeStartDate(date)}
-        onChangeEndDate={date => this.handleChangeEndDate(date)}
-        onChangeResolution={resolution => this.handleChangeResolution(resolution)}
-        />
-      </CCol>
-    </CRow>
-    <CRow>
-      {this.state.valueNames.map((key, index) => {
-        const label = formatLabel(key);
-        const value = this.state[key];
-        
-        return <CCol xs="12" md="4" key={index}>
-            <InfoBox label={label}
-            mean={value?.mean} 
-            median={value?.median} 
-            min={value?.min} 
-            max={value?.max}/>
-          </CCol>
-      })}
-    </CRow>
+      <CRow>
+        <CCol>
+          <CChartLine datasets={chart.datasets} options={chart.options} />
+        </CCol>
+      </CRow>
+      <CRow>
+        <CCol col="12">
+          <DateTimeBar 
+          startDate={this.state.startDate} 
+          endDate={this.state.endDate}
+          resolution={this.state.resolution}
+          onChangeStartDate={date => this.handleChangeStartDate(date)}
+          onChangeEndDate={date => this.handleChangeEndDate(date)}
+          onChangeResolution={resolution => this.handleChangeResolution(resolution)}
+          />
+        </CCol>
+      </CRow>
+      <CRow>
+        {this.state.valueNames.map((key, index) => {
+          const label = formatLabel(key);
+          const value = this.state[key];
+          
+          return <CCol xs="12" md="4" key={index}>
+              <InfoBox label={label}
+              mean={value?.mean} 
+              median={value?.median} 
+              min={value?.min} 
+              max={value?.max}/>
+            </CCol>
+        })}
+      </CRow>
     </CContainer>
   }
 }
