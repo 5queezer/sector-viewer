@@ -1,25 +1,10 @@
 
 import React from 'react';
 import {
-  CBadge,
-  CButton,
-  CButtonGroup,
   CCard,
   CCardBody,
-  CCardFooter,
-  CCardHeader,
-  CCol,
-  CProgress,
-  CRow,
-  CForm,
-  CFormGroup,
-  CInput,
-  CCallout,
-  CCardTitle,
-  CContainer,
-  CCardText,
   CSpinner
-} from '@coreui/react'
+} from '@coreui/react';
 
 class InfoBox extends React.Component {
 
@@ -42,7 +27,7 @@ class InfoBox extends React.Component {
         <tbody className={this.isLoaded() ? 'visible' : 'invisible'}>
           <tr>
             <th>Mean</th>
-            <td>{Math.round(this.props.mean || 0 * 10) / 10}</td>
+            <td>{this.props.mean ? Math.round(this.props.mean * 10) / 10 : NaN}</td>
           </tr>
           <tr>
             <th>Median</th>

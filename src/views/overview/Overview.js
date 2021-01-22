@@ -22,51 +22,8 @@ import {
   CSpinner
 } from '@coreui/react'
 import DateTimePicker from 'react-datetime-picker';
-
-function getMin(mixed) {
-  const miniums = Object.keys(mixed).map(key => { 
-    const v = mixed[key].map(key => key.value);
-    return Math.min(...v);
-  });
-  return Math.min(...miniums);
-}
-
-function getMax(mixed) {
-  const maximums = Object.keys(mixed).map(key => { 
-    const v = mixed[key].map(key => key.value);
-    return Math.max(...v);
-  });
-  return Math.max(...maximums);
-}
-
-function getMean(mixed) {
-  const averages = Object.keys(mixed).map(key => { 
-    const nums = mixed[key].map(key => key.value);
-    const average = nums.reduce((a, b) => (a + b)) / nums.length;
-    return average;
-  });
-  return averages.reduce((a,b) => (a + b)) / averages.length;
-}
-
-function getMedian(mixed) {
-  const median = arr => {
-    const mid = Math.floor(arr.length / 2),
-      nums = [...arr].sort((a, b) => a - b);
-    return arr.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
-  };
-
-  const numbers = Object.keys(mixed).map(key => { 
-    const nums = mixed[key].map(key => key.value);
-    return nums;
-  });
-
-  // flatten arrays
-  const flattened = numbers.reduce((a, b) => {
-    return a.concat(b);
-  }, []);
-
-  return median(flattened);
-}
+import { mean, median, min, max } from 'mathjs';
+import { recursiveSearch } from '../../utils';
 
 class Overview extends React.Component {
   constructor(props) {
@@ -87,14 +44,14 @@ class Overview extends React.Component {
 
       getSectorInfo({ sector, startDate, endDate, resolution, valueNames })
       .then(res => {
-        const values = res.data.values;
+        const values = recursiveSearch(res.data.values, 'value');
 
         this.setState({
           [sector]: {
-            mean: getMean(values),
-            median: getMedian(values),
-            min: getMin(values),
-            max: getMax(values)
+            mean: mean(values),
+            median: median(values),
+            min: min(values),
+            max: max(values)
           }
         })
         
@@ -102,16 +59,8 @@ class Overview extends React.Component {
     });
   }
 
-  updateStartDate(date) {
-    this.setState({
-      startDate: date
-    })
-  }
+  getOverall() {
 
-  updateEndDate(date) {
-    this.setState({
-      endDate: date
-    })
   }
 
   render() {
@@ -153,6 +102,13 @@ class Overview extends React.Component {
             min={this.state[`sector${key}`]?.min} 
             max={this.state[`sector${key}`]?.max}/>
           </CCol>)}
+          <CCol xs="12" md="6">
+            <InfoBox label="Overall"
+            mean={this.state.overall?.mean} 
+            median={this.state.overall?.median} 
+            min={this.state.overall?.min} 
+            max={this.state.overall?.max}/>
+          </CCol>
         
       </CRow>
       </CContainer>
