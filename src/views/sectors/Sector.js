@@ -119,11 +119,7 @@ class Sector1 extends React.Component {
     chart.options = {};
 
     return <CContainer>
-      <CRow>
-        <CCol>
-          <CChartLine datasets={chart.datasets} options={chart.options} />
-        </CCol>
-      </CRow>
+
       <CRow>
         <CCol col="12">
           <DateTimeBar 
@@ -134,6 +130,11 @@ class Sector1 extends React.Component {
           onChangeEndDate={date => this.handleChangeEndDate(date)}
           onChangeResolution={resolution => this.handleChangeResolution(resolution)}
           />
+        </CCol>
+      </CRow>
+      <CRow>
+        <CCol>
+          <CChartLine datasets={chart.datasets} options={chart.options} />
         </CCol>
       </CRow>
       <CRow>
