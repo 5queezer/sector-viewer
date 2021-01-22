@@ -1,5 +1,6 @@
 import React from 'react';
 import getSectorInfo from '../../api';
+import InfoBox from '../../components/InfoBox';
 import {
   CBadge,
   CButton,
@@ -81,7 +82,6 @@ class Overview extends React.Component {
 
   componentDidMount() {
     this.state.sectors.forEach(i => {
-      const label = `Sector ${i}`;
       const sector = `sector${i}`;
       const { startDate, endDate, resolution, valueNames } = this.state;
 
@@ -91,7 +91,6 @@ class Overview extends React.Component {
 
         this.setState({
           [sector]: {
-            label,
             mean: getMean(values),
             median: getMedian(values),
             min: getMin(values),
@@ -146,48 +145,14 @@ class Overview extends React.Component {
 
       <CRow>
 
-        { this.state.sectors.map((key, index) => {
-          if (this.state[`sector${key}`]) {
-            const sector = this.state[`sector${key}`];
-            return <CCol xs="12" md="6" key={index}>
-              <CCard>
-                <CCardBody>
-                  <table className="table table-sm">
-                    <thead>
-                      <tr>
-                        <th colSpan="2">{sector.label}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                          <th>Mean</th>
-                          <td>{Math.round(sector.mean * 10) / 10}</td>
-                        </tr>
-                        <tr>
-                          <th>Median</th>
-                          <td>{sector.median}</td>
-                        </tr>
-                        <tr>
-                          <th>Min</th>
-                          <td>{sector.min}</td>
-                        </tr>
-                        <tr>
-                          <th>Max</th>
-                          <td>{sector.max}</td>
-                        </tr>
-                    </tbody>
-                  </table>
-                </CCardBody>
-              </CCard>
-              </CCol>;
-          } else {
-            return <CCol xs="12" md="6" key={index}>
-              <CCard>
-                <CSpinner color="info" />
-                </CCard>
-              </CCol>;
-          }
-        })}
+        {this.state.sectors.map((key, index) => 
+          <CCol xs="12" md="6" key={index}>
+            <InfoBox label={`Sector ${key}`}
+            mean={this.state[`sector${key}`]?.mean} 
+            median={this.state[`sector${key}`]?.median} 
+            min={this.state[`sector${key}`]?.min} 
+            max={this.state[`sector${key}`]?.max}/>
+          </CCol>)}
         
       </CRow>
       </CContainer>
