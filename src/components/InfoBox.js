@@ -27,7 +27,7 @@ class InfoBox extends React.Component {
         <tbody className={this.isLoaded() ? 'visible' : 'invisible'}>
           <tr>
             <th>Mean</th>
-            <td>{this.props.mean ? Math.round(this.props.mean * 10) / 10 : NaN}</td>
+            <td>{this.props.mean ? Math.round(this.props.mean * 10) / 10 : NaN.toString()}</td>
           </tr>
           <tr>
             <th>Median</th>
