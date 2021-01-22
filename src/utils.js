@@ -18,8 +18,22 @@ export function recursiveSearch (obj, searchKey, results = []) {
     return r;
  };
 
+ /**
+  * Formats a label to a human readable format
+  * e.g. 'value0' to 'Value 0'
+  * @param {*} string 
+  */
+export function formatLabel (string) {
+   // format 'value0' etc. string nicely
+   const matches = string.match(/(\w+)(\d+)/)
+   const label = matches[1].charAt(0).toUpperCase() + 
+      matches[1].slice(1) + ' ' + matches[2];
+   return label;
+}
+
 const utils = {
-    recursiveSearch
+    recursiveSearch,
+    formatLabel
 }
 
 export default utils;
