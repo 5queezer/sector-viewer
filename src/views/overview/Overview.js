@@ -5,7 +5,7 @@ import DateTimeBar from '../../components/DateTimeBar';
 import {
   CCol,
   CRow,
-  CContainer
+  CContainer,
 } from '@coreui/react'
 import { mean, median, min, max } from 'mathjs';
 import { recursiveSearch } from '../../utils';
@@ -21,10 +21,28 @@ class Overview extends React.Component {
       sectors: [1, 2, 3]
     };
   }
-
+  
   componentDidMount() {
+    this.update();
+  }
+
+  update() {
+    // delete previous state, if any
+    this.state.sectors.forEach(i => {
+      const sector = `sector${i}`;
+      this.setState({
+        [sector]: undefined
+      })
+    });
+
+    this.setState({
+      overall: undefined
+    });
+
+    // save all promises for the ajax call
     const promises = [];
 
+    // loop through all the sectors
     this.state.sectors.forEach(i => {
       const sector = `sector${i}`;
       const { startDate, endDate, resolution, valueNames } = this.state;
@@ -70,11 +88,21 @@ class Overview extends React.Component {
   }
 
   handleChangeStartDate(date) {
+    if (date > this.state.endDate) {
+      // TODO insert toast
+      return;
+    }
     this.setState({startDate: date});
+    this.update();
   }
 
   handleChangeEndDate(date) {
+    if (date < this.state.startDate) {
+      // TODO insert toast
+      return;
+    }
     this.setState({endDate: date});
+    this.update();
   }
 
   render() {
