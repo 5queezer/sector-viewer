@@ -7,3 +7,13 @@
 tbody td {
     text-align: right;
 }
+.box-spinner {
+    left: 50%;
+    margin-left: -1em;
+    top: 50%;
+}
+.react-datetime-picker__wrapper {
+    @extend .rounded;
+    @extend .border;
+    padding: 0.2rem;
+}
