@@ -1,27 +1,12 @@
 import React from 'react';
 import getSectorInfo from '../../api';
 import InfoBox from '../../components/InfoBox';
+import DateTimeBar from '../../components/DateTimeBar';
 import {
-  CBadge,
-  CButton,
-  CButtonGroup,
-  CCard,
-  CCardBody,
-  CCardFooter,
-  CCardHeader,
   CCol,
-  CProgress,
   CRow,
-  CForm,
-  CFormGroup,
-  CInput,
-  CCallout,
-  CCardTitle,
-  CContainer,
-  CCardText,
-  CSpinner
+  CContainer
 } from '@coreui/react'
-import DateTimePicker from 'react-datetime-picker';
 import { mean, median, min, max } from 'mathjs';
 import { recursiveSearch } from '../../utils';
 
@@ -67,28 +52,7 @@ class Overview extends React.Component {
       return <CContainer>
       <CRow>
         <CCol col="12">
-          <CCard>
-            <CCardBody>
-            <CForm action="" method="post" encType="multipart/form-data" className="form-horizontal">
-              <CFormGroup row>
-                <CCol xs="12" md="6">
-                  <DateTimePicker
-                    clearIcon={null}
-                    onChange={date => this.setState({ startDate: date })}
-                    value={this.state.startDate}
-                  />
-                </CCol>
-                <CCol xs="12" md="6">
-                  <DateTimePicker
-                    clearIcon={null}
-                    onChange={date => this.setState({ endDate: date })}
-                    value={this.state.endDate}
-                  />
-                </CCol>
-              </CFormGroup>
-            </CForm>
-            </CCardBody>
-          </CCard>
+          <DateTimeBar startDate={this.state.startDate} endDate={this.state.endDate}/>
         </CCol>
       </CRow>
 
