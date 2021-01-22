@@ -23,29 +23,50 @@ class Overview extends React.Component {
   }
 
   componentDidMount() {
+    const promises = [];
+
     this.state.sectors.forEach(i => {
       const sector = `sector${i}`;
       const { startDate, endDate, resolution, valueNames } = this.state;
 
-      getSectorInfo({ sector, startDate, endDate, resolution, valueNames })
+      const p = getSectorInfo({ sector, startDate, endDate, resolution, valueNames })
       .then(res => {
         const values = recursiveSearch(res.data.values, 'value');
 
         this.setState({
           [sector]: {
+            values,
             mean: mean(values),
             median: median(values),
             min: min(values),
             max: max(values)
           }
-        })
+        });
         
       });
+      promises.push(p);
     });
+
+    // loading of all sectors completed
+    Promise.allSettled(promises).then(res => {
+      this.getOverall();
+    });
+   
   }
 
   getOverall() {
-
+    const values = this.state.sectors.map((key, index) => {
+      const sector = `sector${key}`;
+      return this.state[sector].values;
+    });
+    this.setState({
+      overall: {
+        mean: mean(values),
+        median: median(values),
+        min: min(values),
+        max: max(values)
+      }
+    });
   }
 
   handleChangeStartDate(date) {
@@ -71,14 +92,17 @@ class Overview extends React.Component {
 
       <CRow>
 
-        {this.state.sectors.map((key, index) => 
-          <CCol xs="12" md="6" key={index}>
+        {this.state.sectors.map((key, index) => {
+          const sector = `sector${key}`;
+          const state = this.state[sector];
+          
+          return <CCol xs="12" md="6" key={index}>
             <InfoBox label={`Sector ${key}`}
-            mean={this.state[`sector${key}`]?.mean} 
-            median={this.state[`sector${key}`]?.median} 
-            min={this.state[`sector${key}`]?.min} 
-            max={this.state[`sector${key}`]?.max}/>
-          </CCol>)}
+            mean={state?.mean} 
+            median={state?.median} 
+            min={state?.min} 
+            max={state?.max}/>
+          </CCol>})}
           <CCol xs="12" md="6">
             <InfoBox label="Overall"
             mean={this.state.overall?.mean} 
@@ -89,7 +113,6 @@ class Overview extends React.Component {
         
       </CRow>
       </CContainer>
-
 
   }
 }
