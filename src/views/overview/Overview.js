@@ -48,11 +48,24 @@ class Overview extends React.Component {
 
   }
 
+  handleChangeStartDate(date) {
+    this.setState({startDate: date});
+  }
+
+  handleChangeEndDate(date) {
+    this.setState({endDate: date});
+  }
+
   render() {
       return <CContainer>
       <CRow>
         <CCol col="12">
-          <DateTimeBar startDate={this.state.startDate} endDate={this.state.endDate}/>
+          <DateTimeBar 
+          startDate={this.state.startDate} 
+          endDate={this.state.endDate}
+          onChangeStartDate={date => this.handleChangeStartDate(date)}
+          onChangeEndDate={date => this.handleChangeEndDate(date)}
+          />
         </CCol>
       </CRow>
 
