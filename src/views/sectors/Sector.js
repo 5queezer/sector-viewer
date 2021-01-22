@@ -34,8 +34,7 @@ class Sector1 extends React.Component {
       });
     })
 
-
-    const sector = 'sector' + this.sector;
+    const sector = this.props.sector;
     const { startDate, endDate, resolution, valueNames } = this.state;
     getSectorInfo({ sector, startDate, endDate, resolution, valueNames })
     .then(res => {
