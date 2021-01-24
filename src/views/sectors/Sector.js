@@ -5,7 +5,9 @@ import DateTimeBar from '../../components/DateTimeBar';
 import {
   CCol,
   CRow,
-  CContainer
+  CContainer,
+  CCard,
+  CCardBody
 } from '@coreui/react'
 import { CChartLine } from '@coreui/react-chartjs';
 import { getStyle, hexToRgba } from '@coreui/utils'
@@ -17,7 +19,7 @@ const brandSuccess = getStyle('success') || '#4dbd74'
 const brandInfo = getStyle('info') || '#20a8d8'
 const brandDanger = getStyle('danger') || '#f86c6b'
 
-class Sector1 extends React.Component {
+class Sector extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -116,7 +118,24 @@ class Sector1 extends React.Component {
         data: this.state[key]?.values
       }
     });
-    chart.options = {};
+    chart.options = {
+      scales: {
+        xAxes: [{
+          gridLines: {
+            drawOnChartArea: false
+          }
+        }]
+      },
+      elements: {
+        point: {
+          radius: 0,
+          hitRadius: 10,
+          hoverRadius: 4,
+          hoverBorderWidth: 3
+        }
+      }
+    };
+    chart.labels = [];
 
     return <CContainer>
 
@@ -134,7 +153,11 @@ class Sector1 extends React.Component {
       </CRow>
       <CRow>
         <CCol>
-          <CChartLine datasets={chart.datasets} options={chart.options} />
+          <CCard>
+            <CCardBody>
+            <CChartLine datasets={chart.datasets} options={chart.options} labels={chart.labels} />
+            </CCardBody>  
+          </CCard>
         </CCol>
       </CRow>
       <CRow>
@@ -155,4 +178,4 @@ class Sector1 extends React.Component {
   }
 }
 
-export default Sector1
+export default Sector
