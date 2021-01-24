@@ -12,5 +12,8 @@ test('test example api call', async () => {
     const res = await getSectorInfo(args);
     expect(res.status).toBe(200);
     expect(res.data.sectorName).toBe(args.sector);
-
+    expect(Object.keys(res.data.values).length).toBe(3);
+    Object.keys(res.data.values).forEach((key, index) => {
+        expect(res.data.values[key].length).toBe(10);
+    });
 });
