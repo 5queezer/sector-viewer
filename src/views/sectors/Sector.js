@@ -7,9 +7,9 @@ import {
   CRow,
   CContainer,
   CCard,
-  CCardBody
+  CCardBody,
 } from '@coreui/react'
-import { CChartLine } from '@coreui/react-chartjs';
+import { CChart } from '@coreui/react-chartjs';
 import { getStyle, hexToRgba } from '@coreui/utils'
 
 import { mean, median, min, max } from 'mathjs';
@@ -63,7 +63,6 @@ class Sector extends React.Component {
         });
       });
     });
-    
   }
 
   handleChangeStartDate(date) {
@@ -106,7 +105,6 @@ class Sector extends React.Component {
     chart.datasets = this.state.valueNames.map((key, index) => {
       // rotate colors
       const color = colors[colorIndex++ % colors.length];
-
       return {
         label: formatLabel(key),
         fill: false,
@@ -134,7 +132,6 @@ class Sector extends React.Component {
         }
       }
     };
-    chart.labels = [];
 
     return <CContainer>
 
@@ -154,7 +151,7 @@ class Sector extends React.Component {
         <CCol>
           <CCard>
             <CCardBody>
-            <CChartLine datasets={chart.datasets} options={chart.options} labels={chart.labels} />
+            <CChart type="line" datasets={chart.datasets} options={chart.options} labels={chart.labels} />
             </CCardBody>  
           </CCard>
         </CCol>
