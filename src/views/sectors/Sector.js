@@ -27,7 +27,6 @@ class Sector extends React.Component {
       endDate: new Date(1582904375000),
       resolution: 10,
       valueNames: ['value0', 'value1', 'value2'],
-      sector: 1
     };
   }
 
