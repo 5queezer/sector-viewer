@@ -64,9 +64,11 @@ const TheHeader = () => {
             >
               <CIcon name="cil-graph" alt="Overview" />&nbsp;Overview
             </CLink>
+            {/*
             <CLink className="c-subheader-nav-link" href="#">
               <CIcon name="cil-settings" alt="Settings" />&nbsp;Settings
             </CLink>
+            */}
           </div>
       </CSubheader>
     </CHeader>
