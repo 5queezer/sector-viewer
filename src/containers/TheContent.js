@@ -30,7 +30,7 @@ const TheContent = () => {
                   name={route.name}
                   render={props => (
                     <CFade>
-                      <route.component {...props} />
+                      <route.component {...props} {...route.props} />
                     </CFade>
                   )} />
               )
